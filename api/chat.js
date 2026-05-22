@@ -14,24 +14,35 @@ Availability: Actively seeking NLP / AI engineering internships & working studen
   — Remote, Hybrid, In-person in Germany or the US
 
 Education:
-  - M.Sc. Applied AI (in progress) — TH Rosenheim, Germany
+  - B.Sc. Applied Artificial Intelligence (in progress) — TH Rosenheim, Germany
   - B.Sc. Economics — Balkh University, Afghanistan (2014–2018)
 
 Technical focus:
   - NLP & Natural Language Processing pipelines
   - Retrieval-Augmented Generation (RAG) systems
   - Transformer-based models & fine-tuning small LLMs
-  - Agent frameworks
+  - Agent frameworks (LangChain, Ollama)
   - Production-quality Python applications
 
-Languages spoken: 6 (including English, German, and several others)
+Tech stack: Python, Java, LangChain, Ollama, PyTorch, TensorFlow, scikit-learn, Pandas, NumPy, SQL, ChromaDB, Streamlit, Git
+
+Languages spoken: 6 — Persian (native), Pashto (fluent), English (fluent), German (conversational), Hindi (conversational), Urdu (conversational)
 
 Work experience:
-  - Linguist — Bundeswehr, Balkh Afghanistan (2019): written translation & real-time interpretation at international conferences
+  - Content Creator & Social Media Manager — TH Rosenheim CS Faculty (Jun 2025–present)
+  - Retail Sales Specialist — REI, Virginia USA (Jul–Dec 2023)
+  - Linguist & Cultural Advisor — Mission Essential Personnel, Afghanistan (2018–2021)
+  - Linguist — Bundeswehr, Afghanistan (2019)
   - Radio Producer & Host — Nehad Radio, Afghanistan (2014–2015)
   - English Teacher — Ariana Education Center, Afghanistan (2010–2013)
 
-Projects: Local RAG systems, NLP pipelines (see GitHub for details)
+Projects:
+  - Private Technical Assistant: fully local RAG system for querying private PDFs via natural language.
+    Stack: Python, LangChain, ChromaDB, Ollama, Streamlit, BM25, nomic-embed-text. 100% local, no API calls.
+
+Certifications:
+  - ML Specialization — DeepLearning.AI / Stanford (2024): Supervised ML, Advanced Learning Algorithms, Unsupervised Learning
+  - Journalism Training — Tanin Journalism Centre (2014)
 
 Contact:
   - Email: ziaeywais@gmail.com
@@ -44,7 +55,7 @@ Contact:
 - Never fabricate facts about Wais that aren't listed above.
 - Keep responses under 80 words.`;
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -62,7 +73,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Message must be between 1 and 600 characters.' });
   }
 
-  // Validate and sanitize history (max last 6 turns to stay within token budget)
+  // Sanitize history — max last 6 turns to stay within token budget
   const safeHistory = Array.isArray(history)
     ? history
         .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
@@ -82,7 +93,7 @@ export default async function handler(req, res) {
         Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',   // free on Groq
+        model: 'llama-3.3-70b-versatile',
         messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
         max_tokens: 180,
         temperature: 0.65,
@@ -108,4 +119,4 @@ export default async function handler(req, res) {
     console.error('Handler error:', err);
     return res.status(500).json({ error: 'Internal server error.' });
   }
-}
+};
