@@ -1391,46 +1391,199 @@
             color: var(--text-dim)
         }
 
-        /* ── Responsive Mobile Shards ── */
+        /* ── Responsive Tablet & Mobile Shards ── */
+        @media(max-width:860px) {
+
+            /* Transform stats bar into a clean 3-column grid on tablets */
+            .stats-bar {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .stat {
+                border-right: 1px solid var(--border);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .stat:nth-child(3n) {
+                border-right: none;
+            }
+
+            .stat:nth-child(4),
+            .stat:nth-child(5) {
+                border-bottom: none;
+            }
+        }
+
         @media(max-width:640px) {
-            .about-grid {
-                grid-template-columns: 1fr
+
+            /* General padding & typography scaling */
+            section {
+                padding: 60px 0;
             }
 
-            .tl-item {
-                grid-template-columns: 80px 1px 1fr
-            }
-
-            .tl-date {
-                font-size: 10px
-            }
-
-            nav {
-                padding: 0 1rem
+            #hero {
+                padding-top: 100px;
+                padding-bottom: 40px;
             }
 
             .container {
-                padding: 0 1.2rem
+                padding: 0 1.2rem;
             }
 
             .hero-name {
-                font-size: 2.2rem
-            }
-
-            .nav-links {
-                gap: 1rem
-            }
-
-            .nav-links a::before {
-                display: none
-            }
-
-            .term-body {
-                padding: 1rem 1rem 1.5rem
+                font-size: clamp(2rem, 8vw, 2.5rem);
             }
 
             .hero-looking {
-                font-size: 11px
+                font-size: 11px;
+            }
+
+            /* Navigation: Enable horizontal scrolling so links don't cramp */
+            nav {
+                padding: 0 1rem;
+            }
+
+            nav .container {
+                overflow-x: auto;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                gap: 1.5rem;
+            }
+
+            nav .container::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-logo {
+                flex-shrink: 0;
+            }
+
+            .nav-links {
+                flex-shrink: 0;
+                gap: 1rem;
+            }
+
+            .nav-links a::before {
+                display: none;
+            }
+
+            /* Grid & Container Collapses */
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .term-body {
+                padding: 1.2rem;
+            }
+
+            /* Project Cards: Stack content vertically and float the arrow */
+            .project-card {
+                display: flex;
+                flex-direction: column;
+                padding: 1.2rem;
+                position: relative;
+            }
+
+            .proj-arrow {
+                position: absolute;
+                top: 1.2rem;
+                right: 1.2rem;
+            }
+
+            /* Timeline: Move the tracking line to the left edge & stack content */
+            .tl-item {
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                padding-left: 24px;
+                padding-bottom: 2rem;
+                gap: 0.2rem;
+            }
+
+            .tl-line {
+                position: absolute;
+                left: 0;
+                top: 6px;
+                bottom: 0;
+            }
+
+            .tl-track {
+                height: 100%;
+                margin-top: 4px;
+            }
+
+            .tl-date {
+                text-align: left;
+                padding-top: 0;
+                font-size: 11px;
+                margin-bottom: 0.2rem;
+            }
+
+            /* Stats Bar: Shift to a 2-column grid for mobile */
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat:nth-child(odd) {
+                border-right: 1px solid var(--border);
+            }
+
+            .stat:nth-child(even) {
+                border-right: none;
+            }
+
+            .stat:nth-child(4) {
+                border-bottom: 1px solid var(--border);
+            }
+
+            .stat:last-child {
+                grid-column: span 2;
+                border-right: none;
+                border-bottom: none;
+            }
+
+            /* Contact links: Wrap text to prevent horizontal overflow */
+            .contact-link {
+                flex-wrap: wrap;
+                padding: 1rem;
+            }
+
+            .cl-key {
+                width: 100%;
+                margin-bottom: 0.2rem;
+            }
+
+            /* Floating UI: Snap to screen edges to prevent clipping */
+            #toast {
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
+                max-width: none;
+                flex-wrap: wrap;
+            }
+
+            .bot-container {
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            #ai-chat-window {
+                bottom: 5rem;
+                left: 1rem;
+                right: 1rem;
+                width: auto;
+                max-width: none;
+                height: 60vh;
+            }
+
+            #cmd-overlay {
+                padding-top: 5vh;
+            }
+
+            #cmd-box {
+                margin: 0 1rem;
             }
         }
     </style>
