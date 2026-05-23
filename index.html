@@ -60,7 +60,25 @@
             font-family: var(--font);
             font-size: 14px;
             line-height: 1.7;
-            overflow-x: hidden
+            overflow-x: hidden;
+            /* Default custom cursor */
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='rgba(239, 159, 39, 0.1)' stroke='%23EF9F27' stroke-width='1.5'><path d='M2 2l16 6-7 2-2 7z'/></svg>") 2 2, auto;
+        }
+
+        /* Interactive element cursor */
+        a,
+        button,
+        .cmd-item,
+        .hero-btn,
+        #ai-chat-trigger,
+        .t-close,
+        .contact-link {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='rgba(151, 196, 89, 0.2)' stroke='%2397C459' stroke-width='1.5'><path d='M2 2l16 6-7 2-2 7z'/></svg>") 2 2, pointer !important;
+        }
+
+        ::selection {
+            background: rgba(239, 159, 39, 0.2);
+            color: #fff;
         }
 
         ::-webkit-scrollbar {
@@ -428,7 +446,6 @@
             border-radius: 6px;
             font-family: var(--font);
             font-size: 12px;
-            cursor: pointer;
             text-decoration: none;
             transition: all .25s cubic-bezier(0.4, 0, 0.2, 1);
             letter-spacing: .04em;
@@ -864,7 +881,6 @@
             font-size: 10px;
             padding: .2rem .55rem;
             border-radius: 4px;
-            cursor: pointer;
             letter-spacing: .06em;
             transition: all .2s;
             flex-shrink: 0
@@ -1030,7 +1046,6 @@
         #toast .t-close {
             margin-left: .4rem;
             color: var(--muted);
-            cursor: pointer;
             font-size: 14px;
             line-height: 1;
             transition: color .2s
@@ -1103,7 +1118,6 @@
             align-items: center;
             gap: 1rem;
             padding: .8rem 1.4rem;
-            cursor: pointer;
             transition: background .15s;
             border-bottom: 1px solid var(--border)
         }
@@ -1185,7 +1199,6 @@
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: 50%;
-            cursor: pointer;
             outline: none;
             display: flex;
             align-items: center;
@@ -1352,7 +1365,6 @@
             background: transparent;
             border: none;
             color: var(--amber-dim);
-            cursor: pointer;
             font-family: var(--font);
             font-size: 12px;
             font-weight: 500;
@@ -1438,7 +1450,8 @@
         <div id="cmd-box">
             <div id="cmd-input-wrap">
                 <span id="cmd-prompt">❯</span>
-                <input id="cmd-input" placeholder="Type a command or search..." data-i18n-placeholder="cmd_placeholder" autocomplete="off" spellcheck="false" />
+                <input id="cmd-input" placeholder="Type a command or search..." data-i18n-placeholder="cmd_placeholder"
+                    autocomplete="off" spellcheck="false" />
             </div>
             <div id="cmd-results"></div>
             <div id="cmd-footer">
@@ -1457,9 +1470,13 @@
                 <li><a href="#projects" data-section="projects" data-i18n="nav_projects">projects</a></li>
                 <li><a href="#experience" data-section="experience" data-i18n="nav_experience">experience</a></li>
                 <li><a href="#contact" data-section="contact" data-i18n="nav_contact">contact</a></li>
-                <li><button id="lang-toggle" onclick="toggleLang()" style="background:var(--bg3);border:1px solid var(--border);color:var(--amber-dim);font-family:var(--font);font-size:11px;padding:.25rem .7rem;border-radius:4px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--amber)';this.style.color='var(--amber)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--amber-dim)'">DE</button></li>
+                <li><button id="lang-toggle" onclick="toggleLang()"
+                        style="background:var(--bg3);border:1px solid var(--border);color:var(--amber-dim);font-family:var(--font);font-size:11px;padding:.25rem .7rem;border-radius:4px;transition:all .2s"
+                        onmouseover="this.style.borderColor='var(--amber)';this.style.color='var(--amber)'"
+                        onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--amber-dim)'">DE</button>
+                </li>
                 <li><button onclick="openCmd()"
-                        style="background:var(--bg3);border:1px solid var(--border);color:var(--amber-dim);font-family:var(--font);font-size:11px;padding:.25rem .7rem;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:all .2s"
+                        style="background:var(--bg3);border:1px solid var(--border);color:var(--amber-dim);font-family:var(--font);font-size:11px;padding:.25rem .7rem;border-radius:4px;display:flex;align-items:center;gap:.4rem;transition:all .2s"
                         onmouseover="this.style.borderColor='var(--amber)';this.style.color='var(--amber)'"
                         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--amber-dim)'">⌘K</button>
                 </li>
@@ -1475,10 +1492,14 @@
             <div class="hero-eyebrow">// [<span>system_init</span>] — node_01</div>
             <h1 class="hero-name"><span data-i18n="hero_greeting">Hello, I'm</span><br><em id="typed-name"></em></h1>
             <p class="hero-role">$ engine_runtime: <strong>Applied AI · NLP · Machine Learning · Economics</strong></p>
-            <p class="hero-looking"><span id="hero-looking-inner">// Vector Targeting: <span>NLP / AI engineering internships &amp; working student roles</span> — Remote · Hybrid · In-person in 🇩🇪 Germany or 🇺🇸 US · no visa or sponsorship required</span></p>
+            <p class="hero-looking"><span id="hero-looking-inner">// Vector Targeting: <span>NLP / AI engineering
+                        internships &amp; working student roles</span> — Remote · Hybrid · In-person in 🇩🇪 Germany or
+                    🇺🇸 US · no visa or sponsorship required</span></p>
             <p
                 style="font-size:12px;color:var(--text-dim);margin-bottom:2.4rem;padding:.55rem 1rem;border:1px solid var(--border);border-left:2px solid var(--green);border-radius:0 4px 4px 0;background:rgba(151,196,89,.03);display:inline-block">
-                // Live compilation: <span id="hero-live-inner" style="color:var(--green); text-shadow: 0 0 4px rgba(151,196,89,0.3)">transformer-based NLP · fine-tuning small LLMs · agent frameworks</span></p>
+                // Live compilation: <span id="hero-live-inner"
+                    style="color:var(--green); text-shadow: 0 0 4px rgba(151,196,89,0.3)">transformer-based NLP ·
+                    fine-tuning small LLMs · agent frameworks</span></p>
 
             <div class="term-chrome" style="max-width:530px">
                 <div class="term-bar">
@@ -1505,7 +1526,8 @@
                 <a href="#projects" class="hero-btn primary">$ cd ./projects ↵</a>
                 <a href="#contact" class="hero-btn">$ contact --open ↵</a>
                 <a href="#about" class="hero-btn">$ cat about.md ↵</a>
-                <a href="https://github.com/ziaeywais" target="_blank" rel="noopener noreferrer" class="hero-btn">$ open github ↵</a>
+                <a href="https://github.com/ziaeywais" target="_blank" rel="noopener noreferrer" class="hero-btn">$ open
+                    github ↵</a>
             </div>
 
             <div class="hero-meta">
@@ -1555,9 +1577,18 @@
                     <div class="out" style="margin-top:.9rem">
                         <div class="about-grid">
                             <div class="about-text">
-                                <p id="about-p1">I'm <strong>Wais Ziaey</strong> — an AI student at <strong>TH Rosenheim</strong> with a background that spans economics, field linguistics, and hands-on ML and NLP engineering.</p>
-                                <p id="about-p2">I combine technical depth — <strong>Python, RAG systems, transformer-based NLP</strong> — with strong analytical foundations from a first degree in economics and years of high-stakes professional work. I build things that work, pick up new tools quickly, and bring genuine intellectual curiosity to the intersection of <strong>AI systems and their real-world effects</strong> on people and organisations.</p>
-                                <p id="about-p3">I speak six languages and spent years as a <strong>professional linguist</strong> — which means I don't just build NLP systems, I understand language from the inside.</p>
+                                <p id="about-p1">I'm <strong>Wais Ziaey</strong> — an AI student at <strong>TH
+                                        Rosenheim</strong> with a background that spans economics, field linguistics,
+                                    and hands-on ML and NLP engineering.</p>
+                                <p id="about-p2">I combine technical depth — <strong>Python, RAG systems,
+                                        transformer-based NLP</strong> — with strong analytical foundations from a first
+                                    degree in economics and years of high-stakes professional work. I build things that
+                                    work, pick up new tools quickly, and bring genuine intellectual curiosity to the
+                                    intersection of <strong>AI systems and their real-world effects</strong> on people
+                                    and organisations.</p>
+                                <p id="about-p3">I speak six languages and spent years as a <strong>professional
+                                        linguist</strong> — which means I don't just build NLP systems, I understand
+                                    language from the inside.</p>
                                 <div class="badge-row">
                                     <span class="badge lang" data-i18n="badge_persian">Persian · native</span>
                                     <span class="badge lang" data-i18n="badge_pashto">Pashto · fluent</span>
@@ -1685,7 +1716,8 @@
                     <div class="prompt"><span class="pu">visitor</span><span class="pat">@</span><span
                             class="ph">wais.ai</span><span class="pat">:</span><span class="pp">~</span><span
                             class="pd"> $</span> <span class="cmd">ls -la ./projects</span></div>
-                    <div class="out ok" id="proj-status" style="margin-top:.5rem">✓ 1 stable public build compiled — matching shards at github.com/ziaeywais</div>
+                    <div class="out ok" id="proj-status" style="margin-top:.5rem">✓ 1 stable public build compiled —
+                        matching shards at github.com/ziaeywais</div>
                 </div>
             </div>
             <div class="projects-list fade-in">
@@ -1693,11 +1725,15 @@
                     <div>
                         <div class="proj-num">// deployment_01 · active_shard</div>
                         <div class="proj-name">Private Technical Assistant</div>
-                        <div class="proj-desc" id="proj-desc">A fully local RAG system for querying private PDF documents via natural language — no API calls, no cloud, no data leaving the machine.</div>
+                        <div class="proj-desc" id="proj-desc">A fully local RAG system for querying private PDF
+                            documents via natural language — no API calls, no cloud, no data leaving the machine.</div>
                         <ul class="proj-bullets">
-                            <li id="proj-b1">Hybrid retrieval (dense semantic search + BM25) for better recall on technical terms, part numbers &amp; error codes</li>
-                            <li id="proj-b2">Relevance guardrail — declines to answer instead of hallucinating when no relevant content is found</li>
-                            <li id="proj-b3">Cross-encoder reranking + multi-turn query rewriting for improved conversation quality</li>
+                            <li id="proj-b1">Hybrid retrieval (dense semantic search + BM25) for better recall on
+                                technical terms, part numbers &amp; error codes</li>
+                            <li id="proj-b2">Relevance guardrail — declines to answer instead of hallucinating when no
+                                relevant content is found</li>
+                            <li id="proj-b3">Cross-encoder reranking + multi-turn query rewriting for improved
+                                conversation quality</li>
                         </ul>
                         <div class="proj-tags">
                             <span class="tag hi">Python</span><span class="tag hi">LangChain</span><span
@@ -1707,8 +1743,8 @@
                                 local</span>
                         </div>
                     </div>
-                    <a href="https://github.com/ziaeywais/Private_technical_assistant" target="_blank" rel="noopener noreferrer"
-                        class="proj-arrow">↗</a>
+                    <a href="https://github.com/ziaeywais/Private_technical_assistant" target="_blank"
+                        rel="noopener noreferrer" class="proj-arrow">↗</a>
                 </div>
             </div>
             <p class="fade-in" style="margin-top:1.2rem;font-size:12px;color:var(--text-dim)">
@@ -1731,7 +1767,8 @@
                     <div class="prompt"><span class="pu">visitor</span><span class="pat">@</span><span
                             class="ph">wais.ai</span><span class="pat">:</span><span class="pp">~</span><span
                             class="pd"> $</span> <span class="cmd">git log --pretty="%h %s"</span></div>
-                    <div class="out dim" id="exp-terminal" style="margin-top:.4rem">7 verification gates passed across AI, linguistics, macroeconomics &amp; media</div>
+                    <div class="out dim" id="exp-terminal" style="margin-top:.4rem">7 verification gates passed across
+                        AI, linguistics, macroeconomics &amp; media</div>
                 </div>
             </div>
 
@@ -1747,7 +1784,8 @@
                         <div class="tl-role">B.Sc. Applied Artificial Intelligence <span
                                 class="live-badge">active</span></div>
                         <div class="tl-place">Technische Hochschule Rosenheim · Germany</div>
-                        <div class="tl-desc" data-i18n="exp_th_desc">Machine Learning, Deep Learning, Natural Language Processing, Data Engineering, SQL.</div>
+                        <div class="tl-desc" data-i18n="exp_th_desc">Machine Learning, Deep Learning, Natural Language
+                            Processing, Data Engineering, SQL.</div>
                     </div>
                 </div>
 
@@ -1761,7 +1799,9 @@
                         <div class="tl-role">Content Creator &amp; Social Media Manager <span
                                 class="live-badge">active</span></div>
                         <div class="tl-place">TH Rosenheim — Faculty of CS · Germany</div>
-                        <div class="tl-desc" data-i18n="exp_cc_desc">Creating and managing content for the CS faculty Instagram channel. Interviewing students and professors; developing content strategy and editorial planning.</div>
+                        <div class="tl-desc" data-i18n="exp_cc_desc">Creating and managing content for the CS faculty
+                            Instagram channel. Interviewing students and professors; developing content strategy and
+                            editorial planning.</div>
                     </div>
                 </div>
 
@@ -1774,7 +1814,8 @@
                     <div class="tl-content">
                         <div class="tl-role">Retail Sales Specialist</div>
                         <div class="tl-place">REI · Bailey's Crossroads, Virginia, USA</div>
-                        <div class="tl-desc" data-i18n="exp_rei_desc">Advised customers, handled transactions, managed inventory, and trained new staff during peak periods.</div>
+                        <div class="tl-desc" data-i18n="exp_rei_desc">Advised customers, handled transactions, managed
+                            inventory, and trained new staff during peak periods.</div>
                     </div>
                 </div>
 
@@ -1788,9 +1829,12 @@
                         <div class="tl-role">Linguist &amp; Cultural Advisor</div>
                         <div class="tl-place">Mission Essential Personnel (MEP) · Afghanistan</div>
                         <ul class="tl-bullets">
-                            <li data-i18n="exp_mep_b1">Simultaneous interpretation and cultural localisation across English, Pashto, and Dari/Persian in high-stakes, fast-moving environments</li>
-                            <li data-i18n="exp_mep_b2">Editing and proofreading of translated materials to a professional standard</li>
-                            <li data-i18n="exp_mep_b3">Developed strong habits around precision and reliability under ambiguity and pressure</li>
+                            <li data-i18n="exp_mep_b1">Simultaneous interpretation and cultural localisation across
+                                English, Pashto, and Dari/Persian in high-stakes, fast-moving environments</li>
+                            <li data-i18n="exp_mep_b2">Editing and proofreading of translated materials to a
+                                professional standard</li>
+                            <li data-i18n="exp_mep_b3">Developed strong habits around precision and reliability under
+                                ambiguity and pressure</li>
                         </ul>
                     </div>
                 </div>
@@ -1804,7 +1848,8 @@
                     <div class="tl-content">
                         <div class="tl-role">Linguist</div>
                         <div class="tl-place">Bundeswehr · Balkh, Afghanistan</div>
-                        <div class="tl-desc" data-i18n="exp_bw_desc">Written translation and real-time interpretation at official international conferences and coordination meetings.</div>
+                        <div class="tl-desc" data-i18n="exp_bw_desc">Written translation and real-time interpretation at
+                            official international conferences and coordination meetings.</div>
                     </div>
                 </div>
 
@@ -1817,7 +1862,9 @@
                     <div class="tl-content">
                         <div class="tl-role">B.Sc. Economics</div>
                         <div class="tl-place">Balkh University · Afghanistan</div>
-                        <div class="tl-desc" data-i18n="exp_econ_desc">Micro- and macroeconomics, statistics, and economic policy — provides frameworks for analysing AI's effects on labour markets and institutional structures.</div>
+                        <div class="tl-desc" data-i18n="exp_econ_desc">Micro- and macroeconomics, statistics, and
+                            economic policy — provides frameworks for analysing AI's effects on labour markets and
+                            institutional structures.</div>
                     </div>
                 </div>
 
@@ -1830,7 +1877,8 @@
                     <div class="tl-content">
                         <div class="tl-role">Radio Producer &amp; Host</div>
                         <div class="tl-place">Nehad Radio · Balkh, Afghanistan</div>
-                        <div class="tl-desc" data-i18n="exp_radio_desc">Produced and hosted programmes; scripted content, managed scheduling, and developed editorial voice.</div>
+                        <div class="tl-desc" data-i18n="exp_radio_desc">Produced and hosted programmes; scripted
+                            content, managed scheduling, and developed editorial voice.</div>
                     </div>
                 </div>
 
@@ -1843,7 +1891,8 @@
                     <div class="tl-content">
                         <div class="tl-role">English Teacher</div>
                         <div class="tl-place">Ariana Education Center · Afghanistan</div>
-                        <div class="tl-desc" data-i18n="exp_teacher_desc">Planned lessons, designed assessments, and tracked student progress across three years.</div>
+                        <div class="tl-desc" data-i18n="exp_teacher_desc">Planned lessons, designed assessments, and
+                            tracked student progress across three years.</div>
                     </div>
                 </div>
 
@@ -1863,8 +1912,10 @@
                     <div class="prompt"><span class="pu">visitor</span><span class="pat">@</span><span
                             class="ph">wais.ai</span><span class="pat">:</span><span class="pp">~</span><span
                             class="pd"> $</span> <span class="cmd">contact --open --all</span></div>
-                    <div class="out" id="contact-stream" style="margin:.6rem 0 .2rem">Establishing secure stream pathways...</div>
-                    <div class="out ok" id="contact-open">✓ Ports open · U.S. Permanent Resident — no sponsorship metrics required</div>
+                    <div class="out" id="contact-stream" style="margin:.6rem 0 .2rem">Establishing secure stream
+                        pathways...</div>
+                    <div class="out ok" id="contact-open">✓ Ports open · U.S. Permanent Resident — no sponsorship
+                        metrics required</div>
                 </div>
             </div>
 
@@ -1881,7 +1932,8 @@
                     <span class="cl-val">github.com/ziaeywais</span>
                     <span class="cl-arr">→</span>
                 </a>
-                <a href="https://linkedin.com/in/waisziaey" target="_blank" rel="noopener noreferrer" class="contact-link">
+                <a href="https://linkedin.com/in/waisziaey" target="_blank" rel="noopener noreferrer"
+                    class="contact-link">
                     <span class="cl-key">// network_node</span>
                     <span class="cl-val">linkedin.com/in/waisziaey</span>
                     <span class="cl-arr">→</span>
@@ -1889,17 +1941,21 @@
             </div>
 
             <a href="Wais_Ziaey_CV.pdf" download class="cv-btn fade-in">
-                <span id="cv-btn-text">↓ pull schematic_cv</span> <span style="color:var(--amber-dim);font-size:10px;margin-left:5px">· PDF</span>
+                <span id="cv-btn-text">↓ pull schematic_cv</span> <span
+                    style="color:var(--amber-dim);font-size:10px;margin-left:5px">· PDF</span>
             </a>
 
             <p class="fade-in" style="margin-top:1.2rem;font-size:12px;color:var(--text-dim)">
-                <span id="contact-footer">// Ready for deployment onto NLP / AI engineering internships &amp; working student pathways · Remote · Hybrid · 🇩🇪 Germany or 🇺🇸 US · <span style="color:var(--amber-dim)">U.S. Permanent Resident</span>.</span>
+                <span id="contact-footer">// Ready for deployment onto NLP / AI engineering internships &amp; working
+                    student pathways · Remote · Hybrid · 🇩🇪 Germany or 🇺🇸 US · <span
+                        style="color:var(--amber-dim)">U.S. Permanent Resident</span>.</span>
             </p>
         </div>
     </section>
 
     <div class="bot-container">
-        <div id="bot-bubble" class="bot-bubble" data-i18n="chat_bubble">// SYS_CORE: "Hi, how can I help you today?"</div>
+        <div id="bot-bubble" class="bot-bubble" data-i18n="chat_bubble">// SYS_CORE: "Hi, how can I help you today?"
+        </div>
 
         <button id="ai-chat-trigger" onclick="toggleChat()" title="Query AI CV Assistant">
             <svg class="bot-canvas" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -1915,15 +1971,16 @@
         <div class="term-bar">
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <span class="term-title">wais_cv_agent.exe</span>
-            <span style="color:var(--muted); pointer-events:auto; cursor:pointer; font-size:11px;"
-                onclick="toggleChat()">[X]</span>
+            <span style="color:var(--muted); pointer-events:auto; font-size:11px;" onclick="toggleChat()">[X]</span>
         </div>
         <div class="chat-messages" id="chat-messages">
-            <div class="msg bot" id="chat-init-msg">Initialize Agent Core... Status: Ready. Ask me anything regarding Wais's background, technical stack, or linguistics focus.</div>
+            <div class="msg bot" id="chat-init-msg">Initialize Agent Core... Status: Ready. Ask me anything regarding
+                Wais's background, technical stack, or linguistics focus.</div>
         </div>
         <div class="chat-input-area">
             <span style="color:var(--amber); font-size:12px;">❯</span>
-            <input type="text" id="chat-input" placeholder="Query agent metrics..." data-i18n-placeholder="chat_placeholder" autocomplete="off"
+            <input type="text" id="chat-input" placeholder="Query agent metrics..."
+                data-i18n-placeholder="chat_placeholder" autocomplete="off"
                 onkeydown="if(event.key==='Enter') sendChatMessage()" />
             <button class="chat-send-btn" data-i18n="chat_exec" onclick="sendChatMessage()">EXEC</button>
         </div>
@@ -2109,9 +2166,9 @@
         const chatHistory = [];
 
         function sendChatMessage() {
-            const inputEl      = document.getElementById('chat-input');
+            const inputEl = document.getElementById('chat-input');
             const msgContainer = document.getElementById('chat-messages');
-            const query        = inputEl.value.trim();
+            const query = inputEl.value.trim();
             if (!query) return;
 
             // Render user message
@@ -2140,27 +2197,27 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: query, history: chatHistory })
             })
-            .then(res => res.json())
-            .then(data => {
-                clearInterval(thinkInterval);
-                if (data.error) {
-                    botMsg.textContent = `// error: ${data.error}`;
-                } else {
-                    botMsg.textContent = data.response;
-                    // Persist turn for multi-turn context
-                    chatHistory.push({ role: 'user',      content: query });
-                    chatHistory.push({ role: 'assistant', content: data.response });
-                }
-            })
-            .catch(() => {
-                clearInterval(thinkInterval);
-                botMsg.textContent = '// connection dropped — check network status.';
-            })
-            .finally(() => {
-                inputEl.disabled = false;
-                inputEl.focus();
-                msgContainer.scrollTop = msgContainer.scrollHeight;
-            });
+                .then(res => res.json())
+                .then(data => {
+                    clearInterval(thinkInterval);
+                    if (data.error) {
+                        botMsg.textContent = `// error: ${data.error}`;
+                    } else {
+                        botMsg.textContent = data.response;
+                        // Persist turn for multi-turn context
+                        chatHistory.push({ role: 'user', content: query });
+                        chatHistory.push({ role: 'assistant', content: data.response });
+                    }
+                })
+                .catch(() => {
+                    clearInterval(thinkInterval);
+                    botMsg.textContent = '// connection dropped — check network status.';
+                })
+                .finally(() => {
+                    inputEl.disabled = false;
+                    inputEl.focus();
+                    msgContainer.scrollTop = msgContainer.scrollHeight;
+                });
         }
 
         /* ══════════════════════════════════════════
@@ -2168,105 +2225,105 @@
            ══════════════════════════════════════════ */
         const TRANSLATIONS = {
             en: {
-                nav_about:      'about',
-                nav_projects:   'projects',
+                nav_about: 'about',
+                nav_projects: 'projects',
                 nav_experience: 'experience',
-                nav_contact:    'contact',
-                toast_text:     '👋 Available for internships — Remote, Germany or US · no visa required',
-                hero_greeting:  "Hello, I'm",
+                nav_contact: 'contact',
+                toast_text: '👋 Available for internships — Remote, Germany or US · no visa required',
+                hero_greeting: "Hello, I'm",
                 hero_greencard: '🇺🇸 Green Card Recipient',
-                stat_projects:  'Project Shipped',
+                stat_projects: 'Project Shipped',
                 stat_languages: 'Languages Spoken',
-                stat_degrees:   'Degrees',
-                stat_internship:'Internship',
-                stat_frameworks:'Frameworks',
-                badge_persian:  'Persian · native',
-                badge_pashto:   'Pashto · fluent',
-                badge_english:  'English · fluent',
-                badge_german:   'German · conv.',
-                badge_hindi:    'Hindi · conv.',
-                badge_urdu:     'Urdu · conv.',
-                skill_core:     'Core Development',
-                skill_ai:       'AI Engineering',
-                skill_agent:    'Agent Architectures',
-                skill_deep:     'Deep Learning',
-                skill_ml:       'Machine Learning',
-                skill_data:     'Data Science',
+                stat_degrees: 'Degrees',
+                stat_internship: 'Internship',
+                stat_frameworks: 'Frameworks',
+                badge_persian: 'Persian · native',
+                badge_pashto: 'Pashto · fluent',
+                badge_english: 'English · fluent',
+                badge_german: 'German · conv.',
+                badge_hindi: 'Hindi · conv.',
+                badge_urdu: 'Urdu · conv.',
+                skill_core: 'Core Development',
+                skill_ai: 'AI Engineering',
+                skill_agent: 'Agent Architectures',
+                skill_deep: 'Deep Learning',
+                skill_ml: 'Machine Learning',
+                skill_data: 'Data Science',
                 skill_dataarch: 'Data Architecture',
-                skill_deploy:   'Deployment',
-                exp_th_desc:    'Machine Learning, Deep Learning, Natural Language Processing, Data Engineering, SQL.',
-                exp_cc_desc:    'Creating and managing content for the CS faculty Instagram channel. Interviewing students and professors; developing content strategy and editorial planning.',
-                exp_rei_desc:   'Advised customers, handled transactions, managed inventory, and trained new staff during peak periods.',
-                exp_mep_b1:     'Simultaneous interpretation and cultural localisation across English, Pashto, and Dari/Persian in high-stakes, fast-moving environments',
-                exp_mep_b2:     'Editing and proofreading of translated materials to a professional standard',
-                exp_mep_b3:     'Developed strong habits around precision and reliability under ambiguity and pressure',
-                exp_bw_desc:    'Written translation and real-time interpretation at official international conferences and coordination meetings.',
-                exp_econ_desc:  "Micro- and macroeconomics, statistics, and economic policy — provides frameworks for analysing AI's effects on labour markets and institutional structures.",
+                skill_deploy: 'Deployment',
+                exp_th_desc: 'Machine Learning, Deep Learning, Natural Language Processing, Data Engineering, SQL.',
+                exp_cc_desc: 'Creating and managing content for the CS faculty Instagram channel. Interviewing students and professors; developing content strategy and editorial planning.',
+                exp_rei_desc: 'Advised customers, handled transactions, managed inventory, and trained new staff during peak periods.',
+                exp_mep_b1: 'Simultaneous interpretation and cultural localisation across English, Pashto, and Dari/Persian in high-stakes, fast-moving environments',
+                exp_mep_b2: 'Editing and proofreading of translated materials to a professional standard',
+                exp_mep_b3: 'Developed strong habits around precision and reliability under ambiguity and pressure',
+                exp_bw_desc: 'Written translation and real-time interpretation at official international conferences and coordination meetings.',
+                exp_econ_desc: "Micro- and macroeconomics, statistics, and economic policy — provides frameworks for analysing AI's effects on labour markets and institutional structures.",
                 exp_radio_desc: 'Produced and hosted programmes; scripted content, managed scheduling, and developed editorial voice.',
-                exp_teacher_desc:'Planned lessons, designed assessments, and tracked student progress across three years.',
-                chat_bubble:    '// SYS_CORE: "Hi, how can I help you today?"',
-                chat_placeholder:'Query agent metrics...',
-                chat_exec:      'EXEC',
+                exp_teacher_desc: 'Planned lessons, designed assessments, and tracked student progress across three years.',
+                chat_bubble: '// SYS_CORE: "Hi, how can I help you today?"',
+                chat_placeholder: 'Query agent metrics...',
+                chat_exec: 'EXEC',
                 cmd_placeholder: 'Type a command or search...',
-                cmd_navigate:   'navigate',
-                cmd_select:     'select',
-                cmd_close:      'close',
-                footer_text:    'Wais Ziaey · Kolbermoor, Germany · 2026',
+                cmd_navigate: 'navigate',
+                cmd_select: 'select',
+                cmd_close: 'close',
+                footer_text: 'Wais Ziaey · Kolbermoor, Germany · 2026',
             },
             de: {
-                nav_about:      'über mich',
-                nav_projects:   'projekte',
+                nav_about: 'über mich',
+                nav_projects: 'projekte',
                 nav_experience: 'erfahrung',
-                nav_contact:    'kontakt',
-                toast_text:     '👋 Offen für Praktika — Remote, Deutschland oder USA · kein Visum erforderlich',
-                hero_greeting:  'Hallo, ich bin',
+                nav_contact: 'kontakt',
+                toast_text: '👋 Offen für Praktika — Remote, Deutschland oder USA · kein Visum erforderlich',
+                hero_greeting: 'Hallo, ich bin',
                 hero_greencard: '🇺🇸 Green Card Inhaber',
-                stat_projects:  'Projekt veröffentlicht',
+                stat_projects: 'Projekt veröffentlicht',
                 stat_languages: 'Gesprochene Sprachen',
-                stat_degrees:   'Abschlüsse',
-                stat_internship:'Praktikum',
-                stat_frameworks:'Frameworks',
-                badge_persian:  'Persisch · Muttersprache',
-                badge_pashto:   'Paschto · fließend',
-                badge_english:  'Englisch · fließend',
-                badge_german:   'Deutsch · konversationell',
-                badge_hindi:    'Hindi · konversationell',
-                badge_urdu:     'Urdu · konversationell',
-                skill_core:     'Kernentwicklung',
-                skill_ai:       'KI-Engineering',
-                skill_agent:    'Agenten-Architekturen',
-                skill_deep:     'Deep Learning',
-                skill_ml:       'Maschinelles Lernen',
-                skill_data:     'Datenwissenschaft',
+                stat_degrees: 'Abschlüsse',
+                stat_internship: 'Praktikum',
+                stat_frameworks: 'Frameworks',
+                badge_persian: 'Persisch · Muttersprache',
+                badge_pashto: 'Paschto · fließend',
+                badge_english: 'Englisch · fließend',
+                badge_german: 'Deutsch · konversationell',
+                badge_hindi: 'Hindi · konversationell',
+                badge_urdu: 'Urdu · konversationell',
+                skill_core: 'Kernentwicklung',
+                skill_ai: 'KI-Engineering',
+                skill_agent: 'Agenten-Architekturen',
+                skill_deep: 'Deep Learning',
+                skill_ml: 'Maschinelles Lernen',
+                skill_data: 'Datenwissenschaft',
                 skill_dataarch: 'Datenarchitektur',
-                skill_deploy:   'Deployment',
-                exp_th_desc:    'Maschinelles Lernen, Deep Learning, Verarbeitung natürlicher Sprache, Daten-Engineering, SQL.',
-                exp_cc_desc:    'Erstellen und Verwalten von Inhalten für den Instagram-Kanal der Informatikfakultät. Interviews mit Studierenden und Professorinnen; Entwicklung von Content-Strategie und Redaktionsplanung.',
-                exp_rei_desc:   'Kundenberatung, Transaktionsabwicklung, Bestandsverwaltung und Einarbeitung neuer Mitarbeitenden in Stoßzeiten.',
-                exp_mep_b1:     'Simultandolmetschen und kulturelle Lokalisierung zwischen Englisch, Paschto und Dari/Persisch in anspruchsvollen, schnellen Einsatzumgebungen',
-                exp_mep_b2:     'Lektorat und Korrektur übersetzter Materialien auf professionellem Niveau',
-                exp_mep_b3:     'Starke Gewohnheiten in Präzision und Zuverlässigkeit unter Mehrdeutigkeit und Druck entwickelt',
-                exp_bw_desc:    'Schriftliche Übersetzung und Echtzeitdolmetschen bei offiziellen internationalen Konferenzen und Koordinierungstreffen.',
-                exp_econ_desc:  'Mikro- und Makroökonomie, Statistik und Wirtschaftspolitik — liefert Rahmen für die Analyse der Auswirkungen von KI auf Arbeitsmärkte und institutionelle Strukturen.',
+                skill_deploy: 'Deployment',
+                exp_th_desc: 'Maschinelles Lernen, Deep Learning, Verarbeitung natürlicher Sprache, Daten-Engineering, SQL.',
+                exp_cc_desc: 'Erstellen und Verwalten von Inhalten für den Instagram-Kanal der Informatikfakultät. Interviews mit Studierenden und Professorinnen; Entwicklung von Content-Strategie und Redaktionsplanung.',
+                exp_rei_desc: 'Kundenberatung, Transaktionsabwicklung, Bestandsverwaltung und Einarbeitung neuer Mitarbeitenden in Stoßzeiten.',
+                exp_mep_b1: 'Simultandolmetschen und kulturelle Lokalisierung zwischen Englisch, Paschto und Dari/Persisch in anspruchsvollen, schnellen Einsatzumgebungen',
+                exp_mep_b2: 'Lektorat und Korrektur übersetzter Materialien auf professionellem Niveau',
+                exp_mep_b3: 'Starke Gewohnheiten in Präzision und Zuverlässigkeit unter Mehrdeutigkeit und Druck entwickelt',
+                exp_bw_desc: 'Schriftliche Übersetzung und Echtzeitdolmetschen bei offiziellen internationalen Konferenzen und Koordinierungstreffen.',
+                exp_econ_desc: 'Mikro- und Makroökonomie, Statistik und Wirtschaftspolitik — liefert Rahmen für die Analyse der Auswirkungen von KI auf Arbeitsmärkte und institutionelle Strukturen.',
                 exp_radio_desc: 'Sendungen produziert und moderiert; Inhalte verfasst, Sendeplanung verwaltet und redaktionelle Stimme entwickelt.',
-                exp_teacher_desc:'Unterrichtsstunden geplant, Bewertungen entworfen und Lernfortschritte über drei Jahre verfolgt.',
-                chat_bubble:    '// SYS_CORE: "Hallo, wie kann ich helfen?"',
-                chat_placeholder:'Agent abfragen...',
-                chat_exec:      'AUSF.',
+                exp_teacher_desc: 'Unterrichtsstunden geplant, Bewertungen entworfen und Lernfortschritte über drei Jahre verfolgt.',
+                chat_bubble: '// SYS_CORE: "Hallo, wie kann ich helfen?"',
+                chat_placeholder: 'Agent abfragen...',
+                chat_exec: 'AUSF.',
                 cmd_placeholder: 'Befehl eingeben oder suchen...',
-                cmd_navigate:   'navigieren',
-                cmd_select:     'auswählen',
-                cmd_close:      'schließen',
-                footer_text:    'Wais Ziaey · Kolbermoor, Deutschland · 2026',
+                cmd_navigate: 'navigieren',
+                cmd_select: 'auswählen',
+                cmd_close: 'schließen',
+                footer_text: 'Wais Ziaey · Kolbermoor, Deutschland · 2026',
             }
         };
 
         /* ── cmdItems with i18n descriptions ── */
         const CMD_ITEMS_DESC = {
-            en: ['go to about',   'go to projects', 'go to experience', 'go to contact',
-                 'open github',   'open linkedin',  'send email',       'download cv'],
-            de: ['zu über mich',  'zu projekte',    'zu erfahrung',     'zu kontakt',
-                 'GitHub öffnen', 'LinkedIn öffnen','E-Mail senden',    'Lebenslauf laden'],
+            en: ['go to about', 'go to projects', 'go to experience', 'go to contact',
+                'open github', 'open linkedin', 'send email', 'download cv'],
+            de: ['zu über mich', 'zu projekte', 'zu erfahrung', 'zu kontakt',
+                'GitHub öffnen', 'LinkedIn öffnen', 'E-Mail senden', 'Lebenslauf laden'],
         };
 
         let currentLang = localStorage.getItem('lang') || 'en';
