@@ -2315,14 +2315,91 @@
 
         /* ── Chatbot Logic — Llama 3.3 via Groq (free) ── */
 
-        // Maintains multi-turn conversation history in memory
-        const chatHistory = [];
+        // ── Security: Session ID (server manages history server-side via this token) ──
+        const SESSION_ID = crypto.randomUUID();
+
+        // ── Security: Client-side rate limiting (max 10 messages per 60 s) ──
+        const RATE_LIMIT = { max: 10, windowMs: 60_000, timestamps: [] };
+
+        function isRateLimited() {
+            const now = Date.now();
+            RATE_LIMIT.timestamps = RATE_LIMIT.timestamps.filter(t => now - t < RATE_LIMIT.windowMs);
+            if (RATE_LIMIT.timestamps.length >= RATE_LIMIT.max) return true;
+            RATE_LIMIT.timestamps.push(now);
+            return false;
+        }
+
+        // ── Security: Prompt injection pattern detection ──
+        const INJECTION_PATTERNS = [
+            /ignore\s+(all\s+)?(previous|prior|above|earlier)\s+(instructions?|prompts?|context|directives?)/i,
+            /\[\s*system\s*\]/i,
+            /you\s+are\s+now\s+(a\s+)?(?!wais)/i,
+            /new\s+(directive|persona|role|instruction|system\s+prompt)/i,
+            /reveal\s+(your\s+)?(system\s+)?(prompt|instructions?|context|configuration)/i,
+            /disregard\s+(all\s+)?(previous|prior|your)/i,
+            /forget\s+(everything|all|your\s+(previous|prior|instructions?))/i,
+            /act\s+as\s+(if\s+you\s+(are|were)\s+)?(?!wais)/i,
+            /pretend\s+(you\s+are|to\s+be)\s+(?!wais)/i,
+            /do\s+anything\s+now/i,
+            /jailbreak/i,
+            /bypass\s+(your\s+)?(restrictions?|filters?|safety|guidelines?)/i,
+            /<\s*\/?system\s*>/i,
+            /\{\{\s*system/i,
+        ];
+
+        // ── Security: Input length cap ──
+        const MAX_INPUT_LENGTH = 500;
+
+        function isSuspiciousInput(text) {
+            return INJECTION_PATTERNS.some(p => p.test(text));
+        }
+
+        function sanitizeInput(text) {
+            // Strip null bytes and non-printable control characters (keep newlines/tabs)
+            return text.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '').trim();
+        }
+
+        function showBotWarning(msgContainer, botMsg, thinkInterval, text) {
+            clearInterval(thinkInterval);
+            botMsg.className = 'msg bot';
+            botMsg.style.color = 'var(--amber-dim)';
+            botMsg.textContent = text;
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+        }
 
         function sendChatMessage() {
             const inputEl = document.getElementById('chat-input');
             const msgContainer = document.getElementById('chat-messages');
-            const query = inputEl.value.trim();
+            let query = sanitizeInput(inputEl.value);
             if (!query) return;
+
+            // ── Security: Enforce input length cap ──
+            if (query.length > MAX_INPUT_LENGTH) {
+                query = query.slice(0, MAX_INPUT_LENGTH);
+            }
+
+            // ── Security: Client-side rate limit check ──
+            if (isRateLimited()) {
+                const notice = document.createElement('div');
+                notice.className = 'msg bot';
+                notice.style.color = 'var(--amber-dim)';
+                notice.textContent = '// rate limit reached — please wait before sending more messages.';
+                msgContainer.appendChild(notice);
+                msgContainer.scrollTop = msgContainer.scrollHeight;
+                return;
+            }
+
+            // ── Security: Prompt injection check ──
+            if (isSuspiciousInput(query)) {
+                const notice = document.createElement('div');
+                notice.className = 'msg bot';
+                notice.style.color = 'var(--amber-dim)';
+                notice.textContent = '// input rejected — I only answer questions about Wais\'s background and work.';
+                msgContainer.appendChild(notice);
+                inputEl.value = '';
+                msgContainer.scrollTop = msgContainer.scrollHeight;
+                return;
+            }
 
             // Render user message
             const userMsg = document.createElement('div');
@@ -2345,25 +2422,33 @@
             msgContainer.appendChild(botMsg);
             msgContainer.scrollTop = msgContainer.scrollHeight;
 
+            // ── Security: Send session ID instead of raw history; server manages state ──
             fetch('/api/chat', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: query, history: chatHistory })
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Session-ID': SESSION_ID,
+                },
+                body: JSON.stringify({ message: query, sessionId: SESSION_ID })
             })
-                .then(res => res.json())
+                .then(res => {
+                    // ── Security: Hard-fail on unexpected status codes ──
+                    if (!res.ok && res.status !== 400) throw new Error('server_error');
+                    return res.json();
+                })
                 .then(data => {
                     clearInterval(thinkInterval);
                     if (data.error) {
-                        botMsg.textContent = `// error: ${data.error}`;
+                        // ── Security: Never render raw server error strings ──
+                        botMsg.style.color = 'var(--amber-dim)';
+                        botMsg.textContent = '// agent error — please try again.';
                     } else {
                         botMsg.textContent = data.response;
-                        // Persist turn for multi-turn context
-                        chatHistory.push({ role: 'user', content: query });
-                        chatHistory.push({ role: 'assistant', content: data.response });
                     }
                 })
                 .catch(() => {
                     clearInterval(thinkInterval);
+                    botMsg.style.color = 'var(--amber-dim)';
                     botMsg.textContent = '// connection dropped — check network status.';
                 })
                 .finally(() => {
