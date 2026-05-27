@@ -10,7 +10,7 @@ Be concise (2–4 sentences), friendly, and professional. Use a slightly technic
 Full name: Wais Ziaey
 Location: Kolbermoor, Germany
 Status: U.S. Permanent Resident (Green Card) — no visa or sponsorship required
-Availability: Actively seeking NLP / AI engineering internships & working student roles
+Availability: Actively seeking ML / AI internships
   — Remote, Hybrid, In-person in Germany or the US
 
 Education:
@@ -21,10 +21,11 @@ Technical focus:
   - NLP & Natural Language Processing pipelines
   - Retrieval-Augmented Generation (RAG) systems
   - Transformer-based models & fine-tuning small LLMs
-  - Agent frameworks (LangChain, Ollama)
+  - LLM engineering (Anthropic SDK, Ollama)
+  - Agent frameworks (LangChain)
   - Production-quality Python applications
 
-Tech stack: Python, Java, LangChain, Ollama, PyTorch, TensorFlow, scikit-learn, Pandas, NumPy, SQL, ChromaDB, Streamlit, Git
+Tech stack: Python, Java, LangChain, Ollama, Anthropic SDK, PyTorch, TensorFlow, scikit-learn, Pandas, NumPy, SQL, ChromaDB, Streamlit, Git
 
 Languages spoken: 6 — Persian (native), Pashto (fluent), English (fluent), German (conversational), Hindi (conversational), Urdu (conversational)
 
@@ -37,8 +38,12 @@ Work experience:
   - English Teacher — Ariana Education Center, Afghanistan (2010–2013)
 
 Projects:
+  - Contradiction Detector: detects semantic contradictions between documents using vector retrieval paired with LLM-based logic checking. Supports Claude (Anthropic SDK) and Ollama interchangeably. Findings ranked by severity with a Streamlit dashboard and JSON/CSV export.
+    Stack: Python, Anthropic SDK, sentence-transformers, ChromaDB, Ollama, Streamlit, pypdf, pytesseract.
+    GitHub: github.com/ziaeywais/contradiction_detector
   - Private Technical Assistant: fully local RAG system for querying private PDFs via natural language.
     Stack: Python, LangChain, ChromaDB, Ollama, Streamlit, BM25, nomic-embed-text. 100% local, no API calls.
+    GitHub: github.com/ziaeywais/Private_technical_assistant
 
 Certifications:
   - ML Specialization — DeepLearning.AI / Stanford (2024): Supervised ML, Advanced Learning Algorithms, Unsupervised Learning
